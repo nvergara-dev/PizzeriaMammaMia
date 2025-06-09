@@ -1,7 +1,9 @@
 import './app.css'
 import Footer from './components/Footer'
-import Home from './components/Home'
+import Login from './components/Login'
+//import Home from './components/Home'
 import Navbar from './components/Navbar'
+import Register from './components/Register'
 
 export function App() {
 
@@ -9,7 +11,9 @@ export function App() {
   return (
     <>
       <Navbar/>
-      <Home/>
+      <Register/> 
+      <Login/>    
+      {/*<Home />*/}  
       <Footer/>
     </>
   )

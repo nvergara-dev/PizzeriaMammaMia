@@ -1,11 +1,13 @@
 import React from 'react';
-import CardPizza from './CardPizza';
+import CardPizza from './CardPizza'
 import Header from './Header';
+
+
 
 const Home = () => {
   return (
     <div>
-        <Header/>
+        <Header/> 
         <div class= "cards">
             <CardPizza
             nombre="Napolitana"

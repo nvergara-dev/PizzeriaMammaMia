@@ -35,3 +35,9 @@
   height: 8vh;
   color: white;
 }
+
+.ingredientes-list {
+  padding-left: 0;
+  margin-left: 0;
+  list-style-position: inside;
+}

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 const CardPizza = (props) => {
   function primeraLetraMayuscula(cadena) {
     return cadena.charAt(0).toUpperCase() + cadena.slice(1)
   } 
   return (
-    <article className='col-12 col-sm-6 col-md-4 mb-4'>
+    <article className='col-12 col-sm-6 col-md-4 mb-4' id={props.id}>
       <div className='card h-100 shadow-sm border-0'>
         <img src={props.imagen} class="card-img-top" alt="imagen de pizza"/>
         <div className="card-body">
@@ -28,7 +28,7 @@ const CardPizza = (props) => {
         </div>
       </div>
     </article>
-  );
+  )
 }
 
 export default CardPizza

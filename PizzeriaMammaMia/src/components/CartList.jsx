@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { pizzaCart as initialCart } from "../pizzas";
-import Cart from "./Cart";
+import React, { useState } from "react"
+import { pizzaCart as initialCart } from "../pizzas"
+import Cart from "../Pages/Cart"
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState(
     initialCart.map((item) => ({ ...item, count: 1 })) // añade count inicial
-  );
+  )
 
   // Actualiza la cantidad de un producto específico
   const updateCount = (id, newCount) => {
@@ -13,18 +13,18 @@ const CartList = () => {
       prevItems.map((item) =>
         item.id === id ? { ...item, count: newCount } : item
       )
-    );
-  };
+    )
+  }
 
   const removeItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
+  }
 
   // Calcula total general
   const totalGeneral = cartItems.reduce(
     (acc, item) => acc + item.count * item.price,
     0
-  );
+  )
 
   return (
     <div className="container">
@@ -47,7 +47,7 @@ const CartList = () => {
       <h3>Total general: ${totalGeneral.toLocaleString()}</h3>
       <button className="btn btn btn-dark">Pagar</button>
     </div>
-  );
-};
+  )
+}
 
-export default CartList;
+export default CartList

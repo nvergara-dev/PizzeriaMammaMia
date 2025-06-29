@@ -1,34 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+export default function Navbar() {
   const total = 25000;
-  const token = false;  
+  const token = false; // cambiar a true para simular usuario logueado
+
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"> Pizzeria Mamma Mia!</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-1">
-        <li class="nav-item mx-1">
-          <a class="nav-link active" aria-current="page" href="#">🍕Home</a>
-        </li>
-        <li class="nav-item mx-1">
-          {token ? <a class="nav-link" href="#">🔓Profile</a> : <a class="nav-link" href="#">🔐Login</a>}            
-        </li>
-        <li class="nav-item mx-1">
-          {token ? <a class="nav-link" href="#">🔒Logout</a> : <a class="nav-link" href="#">🔐register</a>}  
-        </li>
-      </ul>
-      <span class="navbar-text text-skyblue">
-        🛒Total : ${total.toLocaleString()}
-      </span>
-    </div>
-  </div>
-</nav>
+    <nav className="bg-dark py-3">
+      <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        {/* Logo */}
+        <Link to="/" className="navbar-brand text-white fs-4 text-decoration-none">
+          🍕 Mamma Mia
+        </Link>
+
+        {/* Navegación */}
+        <div className="d-flex flex-wrap gap-3">
+          <Link to="/" className="text-white text-decoration-none">🏠 Home</Link>
+
+          {token ? (
+            <>
+              <Link to="/profile" className="text-white text-decoration-none">🔓 Profile</Link>
+              <Link to="/logout" className="text-white text-decoration-none">🔒 Logout</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-white text-decoration-none">🔐 Login</Link>
+              <Link to="/register" className="text-white text-decoration-none">📝 Register</Link>
+            </>
+          )}
+        </div>
+        <Link to="/profile" className="text-white text-decoration-none">🔓 Profile</Link>  
+        {/* Carrito con link */}
+        <Link to="/cartlist" className="text-white fw-bold text-decoration-none">
+          🛒 Total: ${total.toLocaleString()}
+        </Link>        
+      </div>
+    </nav>
   );
 }
-
-export default Navbar;

@@ -10,10 +10,17 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.6",
-    "preact": "^10.26.5"
+    "lucide-react": "^0.523.0",
+    "preact": "^10.26.5",
+    "prop-types": "^15.8.1",
+    "react-router-dom": "^7.6.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.1",
+    "@tailwindcss/postcss": "^4.1.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
     "vite": "^6.3.5"
   }
 }

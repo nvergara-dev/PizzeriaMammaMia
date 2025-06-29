@@ -1,4 +1,6 @@
-import React from 'react'
+import { Link } from "react-router-dom"
+import PropTypes from 'prop-types';
+
 
 const CardPizza = (props) => {
   function primeraLetraMayuscula(cadena) {
@@ -22,13 +24,24 @@ const CardPizza = (props) => {
         <div className="list-group list-group-flush d-flex justify-content-center align-items-center">
           <h3>Precio:${props.precio.toLocaleString()}</h3>
           <div className="d-flex justify-content-between align-items-center m-0">
-            <button type="button" className="btn btn-outline-dark m-4">Ver Mas 👀</button>
+            <Link to="/pizza/001" >
+              <button type="button" className="btn btn-outline-dark m-4">Ver Mas 👀</button>
+            </Link>
+            
             <button type="button" className="btn btn-dark m-4">Añadir🛒</button>
           </div>        
         </div>
       </div>
     </article>
   )
+}
+
+CardPizza.propTypes = {
+  id: PropTypes.string.isRequired,
+  nombre: PropTypes.string.isRequired,
+  imagen: PropTypes.string.isRequired,
+  precio: PropTypes.number.isRequired,
+  ingredientes: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default CardPizza

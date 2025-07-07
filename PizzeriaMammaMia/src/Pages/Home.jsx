@@ -1,30 +1,24 @@
-import { useEffect, useState } from "react"
+import React from "react"
+import { usePizzas } from "../context/PizzaContext"
 import CardPizza from "../components/CardPizza"
-import Header from "../components/Header"
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([])
-  const getPizzas = async () => {
-    const res = await fetch("http://localhost:5000/api/pizzas")
-    const data = await res.json()
-    console.log(data)
-    setPizzas(Array.isArray(data) ? data : data.pizzas || [])
-  };
+  const { pizzas, loading } = usePizzas()
 
-  useEffect(() => {
-    getPizzas()
-  }, [])
+  if (loading) return <div className="text-center p-5">Cargando pizzas...</div>
+
   return (
-    <div>
-      <Header />
-      <div className="row m-3">
+    <div className="container py-4">
+      <h2 className="mb-4">Nuestras Pizzas</h2>
+      <div className="row">
         {pizzas.map((pizza) => (
           <CardPizza
+            key={pizza.id}
             id={pizza.id}
             nombre={pizza.name}
+            imagen={pizza.img}
             precio={pizza.price}
             ingredientes={pizza.ingredients}
-            imagen={pizza.img}
           />
         ))}
       </div>

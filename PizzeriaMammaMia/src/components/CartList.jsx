@@ -1,30 +1,9 @@
-import React, { useState } from "react"
-import { pizzaCart as initialCart } from "../pizzas"
+import React from "react"
+import { useCart } from "../context/CartContext"
 import Cart from "../Pages/Cart"
 
 const CartList = () => {
-  const [cartItems, setCartItems] = useState(
-    initialCart.map((item) => ({ ...item, count: 1 })) // añade count inicial
-  )
-
-  // Actualiza la cantidad de un producto específico
-  const updateCount = (id, newCount) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, count: newCount } : item
-      )
-    )
-  }
-
-  const removeItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id))
-  }
-
-  // Calcula total general
-  const totalGeneral = cartItems.reduce(
-    (acc, item) => acc + item.count * item.price,
-    0
-  )
+  const { cartItems, updateCount, removeFromCart, total } = useCart()
 
   return (
     <div className="container">
@@ -33,19 +12,19 @@ const CartList = () => {
 
       {cartItems.map((item) => (
         <Cart
+          key={item.id}
           nombre={item.name}
           precio={item.price}
           imagen={item.img}
           count={item.count}
-          key={item.id}
           onCountChange={(newCount) => updateCount(item.id, newCount)}
-          onRemove={() => removeItem(item.id)}
+          onRemove={() => removeFromCart(item.id)}
         />
       ))}
 
       <hr />
-      <h3>Total general: ${totalGeneral.toLocaleString()}</h3>
-      <button className="btn btn btn-dark">Pagar</button>
+      <h3>Total general: ${total.toLocaleString()}</h3>
+      <button className="btn btn-dark">Pagar</button>
     </div>
   )
 }

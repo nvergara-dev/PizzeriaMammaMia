@@ -1,9 +1,11 @@
-import React from "react"
-import { useCart } from "../context/CartContext"
-import Cart from "../Pages/Cart"
+import React from "react";
+import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext"; 
+import Cart from "../Pages/Cart";
 
 const CartList = () => {
-  const { cartItems, updateCount, removeFromCart, total } = useCart()
+  const { cartItems, updateCount, removeFromCart, total } = useCart();
+  const { token } = useUser(); 
 
   return (
     <div className="container">
@@ -24,9 +26,19 @@ const CartList = () => {
 
       <hr />
       <h3>Total general: ${total.toLocaleString()}</h3>
-      <button className="btn btn-dark">Pagar</button>
-    </div>
-  )
-}
 
-export default CartList
+     
+      <button className="btn btn-dark" disabled={!token}>
+        Pagar
+      </button>
+
+      {!token && (
+        <p className="text-danger mt-2">
+          Debes iniciar sesión para continuar con el pago.
+        </p>
+      )}
+    </div>
+  );
+};
+
+export default CartList;

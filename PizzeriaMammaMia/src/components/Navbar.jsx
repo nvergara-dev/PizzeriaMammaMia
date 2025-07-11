@@ -1,10 +1,11 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import { useCart } from "../context/CartContext"
+import React from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext"; // ✅ Importar el contexto de usuario
 
 export default function Navbar() {
-  const { total } = useCart()
-  const token = false // simula login
+  const { total } = useCart();
+  const { token, logout } = useUser(); // ✅ Usar token y método logout
 
   return (
     <nav className="bg-dark py-3">
@@ -18,7 +19,12 @@ export default function Navbar() {
           {token ? (
             <>
               <Link to="/profile" className="text-white text-decoration-none">🔓 Profile</Link>
-              <Link to="/logout" className="text-white text-decoration-none">🔒 Logout</Link>
+              <button
+                onClick={logout}
+                className="btn btn-link text-white text-decoration-none p-0"
+              >
+                🔒 Logout
+              </button>
             </>
           ) : (
             <>
@@ -33,5 +39,5 @@ export default function Navbar() {
         </Link>
       </div>
     </nav>
-  )
+  );
 }

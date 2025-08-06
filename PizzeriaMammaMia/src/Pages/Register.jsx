@@ -1,104 +1,98 @@
 import React, { useState } from 'react'
+import { useUser } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
-const [registro, setRegistro] = useState({
-    email: '',
-    pass: '', 
-    confirmPass: ''
-})
-const handleChange = (e) => {
-    setRegistro({ ...registro, [e.target.name]: e.target.value })  
-}
-const handleSubmit = async (e) => {
+  const [registro, setRegistro] = useState({ email: '', pass: '',
+confirmPass: '' })
+  const { register } = useUser()
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setRegistro({ ...registro, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const{email,pass,confirmPass} = registro
-    
-    //Validamos que los campos esten completos 
-    if ( !email.trim() || !pass.trim() || !confirmPass.trim() ) {
-        alert('Para continuar debe completar todos los campos del formulario!')
-        return null
+    const { email, pass, confirmPass } = registro
+
+    if (!email || !pass || !confirmPass) {
+      alert('Todos los campos son obligatorios.')
+      return
     }
 
-    //Validamos el largo de la pass
-    if ( pass.length < 6) {
-        alert('La password debe tener almenos 6 caracteres')
-        return null
+    if (pass.length < 6) {
+      alert('La contraseña debe tener al menos 6 caracteres.')
+      return;
     }
 
-    //Validamos que ambas pass sean iguales
     if (pass !== confirmPass) {
-        alert('Las contraseñas deben ser Iguales')
-        return null
+      alert('Las contraseñas no coinciden.')
+      return;
     }
 
-    //si pasa todas las validaciones , registro esta ok
-    alert('Registro Exitoso')
+    try {
+      await register(email, pass)
+      alert('¡Registro exitoso!')
+      navigate('/')
+    } catch (error) {
+      console.error("Error al registrar:", error)
+      alert('Error al registrarse.')
+    }
+  }
 
-    //Limpiamos inputs
-    setRegistro({
-    email: '',
-    pass: '', 
-    confirmPass: ''
-    })
-}
-    
-return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <form className="m-2" onSubmit={handleSubmit}>
-                <h1>Registrar</h1>           
-                <div className="mb-3">
-                    <label htmlfor="inputEmail3" class="col-sm-2 col-form-label">
-                        Email
-                    </label>
-                    <input 
-                        type="email" 
-                        name="email"
-                        value={registro.email} 
-                        onChange={handleChange} 
-                        placeholder="Ingrese su correo electrónico" 
-                        class="form-control" 
-                        id="inputEmail3"
-                    />
-                </div>                        
-                <div className="mb-3">
-                    <label htmlfor="inputPassword3" class="col-sm-2 col-form-label">
-                        Contraseña
-                    </label>
-                    <input 
-                        type="password" 
-                        name="pass"
-                        value={registro.pass} 
-                        onChange={handleChange} 
-                        placeholder="Ingrese su contraseña" 
-                        class="form-control" 
-                        id="inputPassword3"
-                    />
-                </div>                        
-                <div className="mb-3">
-                    <label htmlfor="inputPassword33" class="col-sm-2 col-form-label">
-                        Confirmar Contraseña
-                    </label>
-                    <input 
-                        type="password"     
-                        name="confirmPass"                    
-                        value={registro.confirmPass} 
-                        onChange={handleChange} 
-                        placeholder="Repita su contraseña" 
-                        class="form-control" 
-                        id="inputPassword33"
-                    />
-                </div>            
-                <button type="submit" class="btn btn-primary">
-                    Registrar
-                </button>
-            </form>
-          </div>
+  return (
+    <div className="container d-flex justify-content-center
+align-items-center" style={{ minHeight: '70vh' }}>
+      <form onSubmit={handleSubmit} className="bg-light p-5 rounded
+shadow w-100" style={{ maxWidth: '500px' }}>
+        <h2 className="mb-4 text-center">📝 Crear una cuenta</h2>
+
+        <div className="mb-3">
+          <label className="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            name="email"
+            value={registro.email}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="ejemplo@correo.com"
+            required
+          />
         </div>
-      </div>
+
+        <div className="mb-3">
+          <label className="form-label">Contraseña</label>
+          <input
+            type="password"
+            name="pass"
+            value={registro.pass}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="••••••"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="form-label">Confirmar contraseña</label>
+          <input
+            type="password"
+            name="confirmPass"
+            value={registro.confirmPass}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="••••••"
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-dark w-100">
+          Registrarse
+        </button>
+      </form>
     </div>
   )
 }
-export default Register;
+
+export default Register

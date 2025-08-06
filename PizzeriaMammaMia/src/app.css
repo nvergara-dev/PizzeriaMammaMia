@@ -42,6 +42,7 @@
   list-style-position: inside;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,11 +1,32 @@
-import React from "react";
-import { useCart } from "../context/CartContext";
-import { useUser } from "../context/UserContext"; 
-import Cart from "../Pages/Cart";
+import React, { useState } from "react"
+import { useCart } from "../context/CartContext"
+import { useUser } from "../context/UserContext"
+import Cart from "../Pages/Cart"
 
 const CartList = () => {
-  const { cartItems, updateCount, removeFromCart, total } = useCart();
-  const { token } = useUser(); 
+  const { cartItems, updateCount, removeFromCart, total } = useCart()
+  const { token } = useUser()
+  const [mensaje, setMensaje] = useState("")
+
+  const handleCheckout = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart: cartItems }),
+      })
+
+      if (!res.ok) throw new Error("Error en el checkout")
+
+      setMensaje("✅ Compra realizada con éxito")
+    } catch (error) {
+      console.error("error al enviar checkout : ", error)
+      setMensaje("❌ Hubo un error al procesar la compra")
+    }
+  }
 
   return (
     <div className="container">
@@ -27,8 +48,11 @@ const CartList = () => {
       <hr />
       <h3>Total general: ${total.toLocaleString()}</h3>
 
-     
-      <button className="btn btn-dark" disabled={!token}>
+      <button
+        className="btn btn-dark"
+        disabled={!token}
+        onClick={handleCheckout}
+      >
         Pagar
       </button>
 
@@ -37,8 +61,14 @@ const CartList = () => {
           Debes iniciar sesión para continuar con el pago.
         </p>
       )}
-    </div>
-  );
-};
 
-export default CartList;
+      {mensaje && (
+        <div className="alert alert-info mt-3" role="alert">
+          {mensaje}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default CartList

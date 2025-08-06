@@ -13,7 +13,7 @@ import Pizza from "./Pages/Pizza"
 import NotFound from "./components/NotFound"
 import Profile from "./Pages/Profile"
 
-import ProtectedRoute from "./components/ProtectedRoute"
+import ProtectedRoute  from "./components/ProtectedRoute"
 import PublicOnlyRoute from "./components/PublicOnlyRoute"
 
 export function App() {
@@ -38,7 +38,7 @@ export function App() {
             </PublicOnlyRoute>
           }
         />
-        <Route path="/cartlist" element={<CartList />} />
+        <Route path="/cart" element={<CartList />} />
         <Route path="/pizza/:id" element={<Pizza />} />
         <Route
           path="/profile"

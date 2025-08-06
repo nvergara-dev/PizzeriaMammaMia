@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react'
+import { useUser } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
-  const email = 'usuario@ejemplo.com';
+  const { email, token, getProfile, logout } = useUser()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (token) {
+      getProfile().catch(() => {
+        alert('Error al cargar el perfil')
+        logout()
+        navigate('/login')
+      })
+    } else {
+      navigate('/login')
+    }
+  }, [token])
 
   const handleLogout = () => {
-    alert('Sesión cerrada (aún no implementado)');
-    // Aquí luego iría la lógica real: borrar tokens, redirigir, etc.
-  };
+    logout()
+    navigate('/')
+  }
 
   return (
     <div className="container py-5 text-center">
@@ -16,7 +31,7 @@ const Profile = () => {
         Cerrar sesión 🔒
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
